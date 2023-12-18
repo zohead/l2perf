@@ -25,6 +25,10 @@ struct Opt {
     bandwidth: f32,
     #[structopt(short, long, default_value = "10", help = "Duration in seconds")]
     tsecs: u64,
+    #[structopt(short = "R", long, default_value = "4096", help = "Read buffer size")]
+    read_buf_sz: usize,
+    #[structopt(short = "W", long, default_value = "4096", help = "Write buffer size")]
+    write_buf_sz: usize,
     #[structopt(short, long, default_value = "7380", parse(try_from_str = parse_hex), help = "Ethertype in hex")]
     ethertype: u16,
     #[structopt(short, long, default_value = "1500", help = "Payload size")]
@@ -284,6 +288,8 @@ fn main() {
     let mut config: Config = Default::default();
 
     config.promiscuous = false;
+    config.read_buffer_size = opt.read_buf_sz;
+    config.write_buffer_size = opt.write_buf_sz;
 
     if opt.rx {
         config.channel_type = ChannelType::Layer3(opt.ethertype);
