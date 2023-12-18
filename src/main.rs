@@ -283,6 +283,8 @@ fn main() {
 
     let mut config: Config = Default::default();
 
+    config.promiscuous = false;
+
     if opt.rx {
         config.channel_type = ChannelType::Layer3(opt.ethertype);
         config.read_timeout = Some(Duration::from_secs(2));
